@@ -1,16 +1,48 @@
-<div class=" col-md-4 col-xs-6">
-	<div class="panel panel-default">
-		<div class="panel-heading"><strong>Users</strong></div>
-		<table class="table">
-			<% @users.each_with_index do |user, index| %>
-				<tr>
-					<td><%= index +=1 %></td>
-					<td><%= user.username %></td>
-					<td>
-						<%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation", "data-sid" => current_user.try(:id), "data-rip" => user.try(:id) %>
-					</td>
-				</tr>
-			<% end %>
-		</table>
+<% if user_signed_in? %>
+<div class="row">
+	<div class=" col-md-4 col-xs-6">
+		<div style="height: 300px; overflow-y: auto;">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>Users</strong></div>
+				<table class="table">
+					<% @users.each_with_index do |user, index| %>
+						<tr>
+							<td><%= index +=1 %></td>
+							<td><%= user.username %></td>
+							<td>
+								<%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation", "data-sid" => current_user.try(:id), "data-rip" => user.try(:id) %>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+			</div>
+		</div>
+		<div style="height: 300px; overflow-y: auto;">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>Channels</strong></div>
+				<table class="table">
+					<% @channels.each_with_index do |channel, index| %>
+						<tr>
+							<td><%= index += 1 %></td>
+							<td><%= channel.name %></td>
+							<td>
+								<%= link_to "Enter Channel", "#", class: "btn btn-success btn-xs switch-channel", "data-sid" => current_user.try(:id), "data-channelid" => channel.id %>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+				<div class="panel-footer"><%=link_to "Add Channel", new_channel_path, class: "btn btn-success " %></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8 col-xs-6" id="channelBox">
 	</div>
 </div>
+<% else %>
+<div class="jumbotron">
+		<h1>Welcome!</h1>
+		<p>Thanks for checking out my chat app</p>
+		<%= link_to "Sign In", new_user_session_path, class: "btn btn-success" %>
+        <%= link_to "Register", new_user_registration_path, class: "btn btn-info" %>
+</div>
+<% end %>

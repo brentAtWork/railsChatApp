@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     resources :messages
   end
 
+  resources :channels do
+    resources :messages
+  end
+
   # Example resource route with more complex sub-resources:
   #   resources :products do
   #     resources :comments

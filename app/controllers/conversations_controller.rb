@@ -16,7 +16,7 @@ class ConversationsController < ApplicationController
 	def show
 		@conversation = Conversation.find(params[:id])
 		@reciever = interlocuter(@conversation)
-		@messages = @conversation.messages
+		@messages = @conversation.messages.order(created_at: :asc)
 		@message = Message.new
 	end
 
